@@ -151,7 +151,7 @@ class VADAudio(Audio):
                     yield None
                     ring_buffer.clear()
 
-def main(ARGS):
+def main(ARGS, executor):
     # Load DeepSpeech model
     if os.path.isdir(ARGS.model):
         model_dir = ARGS.model
@@ -170,7 +170,7 @@ def main(ARGS):
                          device=ARGS.device,
                          input_rate=ARGS.rate,
                          file=ARGS.file)
-    print("Listening (ctrl-C to exit)...")
+    executor("Listening...")
     frames = vad_audio.vad_collector()
 
     # Stream from microphone to DeepSpeech using VAD
@@ -193,35 +193,28 @@ def main(ARGS):
                     vad_audio.write_wav(os.path.join(ARGS.savewav, datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav")), wav_data)
                     wav_data = bytearray()
                 text = stream_context.finishStream()
-                print("Recognized: %s" % text)
+                executor(text)
                 stream_context = model.createStream()
     except:
         pass
 
-if __name__ == '__main__':
+def startSTTModal(executor):
     DEFAULT_SAMPLE_RATE = 16000
+    DEFAULT_MODEL_DIR = 'models/deepspeech-0.9.3-models.tflite'
+    DEFAULT_SCORER = 'models/'
 
     import argparse
     parser = argparse.ArgumentParser(description="Stream from microphone to DeepSpeech using VAD")
 
-    parser.add_argument('-v', '--vad_aggressiveness', type=int, default=3,
-                        help="Set aggressiveness of VAD: an integer between 0 and 3, 0 being the least aggressive about filtering out non-speech, 3 the most aggressive. Default: 3")
-    parser.add_argument('--nospinner', action='store_true',
-                        help="Disable spinner")
-    parser.add_argument('-w', '--savewav',
-                        help="Save .wav files of utterences to given directory")
-    parser.add_argument('-f', '--file',
-                        help="Read from .wav file instead of microphone")
-
-    parser.add_argument('-m', '--model', required=True,
-                        help="Path to the model (protocol buffer binary file, or entire directory containing all standard-named files for model)")
-    parser.add_argument('-s', '--scorer',
-                        help="Path to the external scorer file.")
-    parser.add_argument('-d', '--device', type=int, default=None,
-                        help="Device input index (Int) as listed by pyaudio.PyAudio.get_device_info_by_index(). If not provided, falls back to PyAudio.get_default_device().")
-    parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE,
-                        help=f"Input device sample rate. Default: {DEFAULT_SAMPLE_RATE}. Your device may require 44100.")
+    parser.add_argument('-v', '--vad_aggressiveness', type=int, default=3)
+    parser.add_argument('--nospinner', action='store_true',)
+    parser.add_argument('-w', '--savewav')
+    parser.add_argument('-f', '--file')
+    parser.add_argument('-m', '--model',  default=DEFAULT_MODEL_DIR)
+    parser.add_argument('-s', '--scorer')
+    parser.add_argument('-d', '--device', type=int, default=None)
+    parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE)
 
     ARGS = parser.parse_args()
     if ARGS.savewav: os.makedirs(ARGS.savewav, exist_ok=True)
-    main(ARGS)
+    main(ARGS, executor)

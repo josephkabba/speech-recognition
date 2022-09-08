@@ -59,9 +59,11 @@ class ScrollableLabel(ScrollView):
         self.chat_history.text_size = (self.chat_history.width * 0.98, None)
 
 class ChatScreen(GridLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, sendMessage,**kwargs):
         super().__init__(**kwargs)
         self.bind(size=self.adjust_fields)
+
+        self.sendMessage = sendMessage
 
         # We are going to use 1 column and 2 rows
         self.cols = 1
@@ -119,7 +121,7 @@ class ChatScreen(GridLayout):
         if message:
             # Our messages - use red color for the name
             self.history.update_chat_history(f'[color=dd2020]{"Your Message"}[/color] > {message}')
-
+            self.sendMessage(message)
 
         # As mentioned above, we have to shedule for refocusing to input field
         Clock.schedule_once(self.focus_text_input, 0.1)
