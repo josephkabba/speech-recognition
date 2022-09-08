@@ -1,12 +1,12 @@
 import kivy
 from kivy.app import App
-from kivy.uix.label import Label
+from gui.screens.chatscreen import ChatScreen
 
 
-class SRMain(App):
+class SRMainApp(App):
     def build(self):
-        return Label(text='Hello World')
+        return ChatScreen()
 
 
-def startUI(app = SRMain()):
+def startUI(app = SRMainApp()):
     app.run()
