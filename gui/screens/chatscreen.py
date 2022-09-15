@@ -47,7 +47,7 @@ class ScrollableLabel(ScrollView):
         # scroll to the botton, nor there is a method that can do that.
         # That's why we want additional, empty wodget below whole text - just to be able to scroll to it,
         # so scroll to the bottom of the layout
-        self.scroll_to(self.scroll_to_point)
+        # self.scroll_to(self.scroll_to_point)
 
     def update_chat_history_layout(self, _=None):
         # Set layout height to whatever height of chat history text is + 15 pixels
@@ -107,11 +107,11 @@ class ChatScreen(GridLayout):
 
         # But we want to take an action only when Enter key is being pressed, and send a message
         if keycode == 40:
-            self.send_message()
+            self.send_message(None)
 
     # Gets called when either Send button or Enter key is being pressed
     # (kivy passes button object here as well, but we don;t care about it)
-    def send_message(self):
+    def send_message(self, _):
 
         # Get message text and clear message input field
         message = self.new_message.text
