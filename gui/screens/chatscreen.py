@@ -59,7 +59,7 @@ class ScrollableLabel(ScrollView):
         self.chat_history.text_size = (self.chat_history.width * 0.98, None)
 
 class ChatScreen(GridLayout):
-    def __init__(self, sendMessage,**kwargs):
+    def __init__(self, sendMessage, **kwargs):
         super().__init__(**kwargs)
         self.bind(size=self.adjust_fields)
 
@@ -107,11 +107,11 @@ class ChatScreen(GridLayout):
 
         # But we want to take an action only when Enter key is being pressed, and send a message
         if keycode == 40:
-            self.send_message(None)
+            self.send_message()
 
     # Gets called when either Send button or Enter key is being pressed
     # (kivy passes button object here as well, but we don;t care about it)
-    def send_message(self, _):
+    def send_message(self):
 
         # Get message text and clear message input field
         message = self.new_message.text
@@ -154,5 +154,5 @@ class ChatScreen(GridLayout):
         self.new_message.width = new_width
 
         # Update chat history layout
-        #self.history.update_chat_history_layout()
+        # self.history.update_chat_history_layout()
         Clock.schedule_once(self.history.update_chat_history_layout, 0.01)

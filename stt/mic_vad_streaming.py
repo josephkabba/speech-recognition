@@ -201,7 +201,7 @@ def main(ARGS, executor):
 def startSTTModal(executor):
     DEFAULT_SAMPLE_RATE = 16000
     DEFAULT_MODEL_DIR = 'models/deepspeech-0.9.3-models.tflite'
-    DEFAULT_SCORER = 'models/'
+    DEFAULT_SCORER = 'models/deepspeech-0.9.3-models.scorer'
 
     import argparse
     parser = argparse.ArgumentParser(description="Stream from microphone to DeepSpeech using VAD")
@@ -211,7 +211,7 @@ def startSTTModal(executor):
     parser.add_argument('-w', '--savewav')
     parser.add_argument('-f', '--file')
     parser.add_argument('-m', '--model',  default=DEFAULT_MODEL_DIR)
-    parser.add_argument('-s', '--scorer')
+    parser.add_argument('-s', '--scorer', default=DEFAULT_SCORER)
     parser.add_argument('-d', '--device', type=int, default=None)
     parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE)
 
