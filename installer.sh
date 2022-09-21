@@ -30,15 +30,6 @@ then
     sudo apt install wget
 fi
 
-pip3 install virtualenv
-
-echo ""
-echo "Creating virtual environment: speechrc"
-virtualenv -p python3.7 speechrc
-
-source speechrc/bin/activate
-
-cd speechrc
 
 git clone https://github.com/josephkabba/speech-recognition.git
 
@@ -46,7 +37,6 @@ cd speech-recognition
 
 sudo apt-get install libasound-dev portaudio19-dev libportaudio2 python-pyaudio libportaudiocpp0
 
-pip install -r requirements.txt
 
 echo ""
 echo "Installing modals"
@@ -57,5 +47,3 @@ mkdir models
 
 mv deepspeech-0.9.3-models.tflite models/deepspeech-0.9.3-models.tflite
 mv deepspeech-0.9.3-models.scorer models/deepspeech-0.9.3-models.scorer
-
-python main.py
