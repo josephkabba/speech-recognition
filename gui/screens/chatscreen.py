@@ -77,7 +77,7 @@ class ChatScreen(GridLayout):
         # In the second row, we want to have input fields and Send button
         # Input field should take 80% of window width
         # We also want to bind button click to send_message method
-        self.new_message = TextInput(width=Window.size[0]*0.8, size_hint_x=None, multiline=True)
+        self.new_message = TextInput(width=Window.size[0]*0.8, size_hint_x=None, multiline=False)
         self.send = Button(text="Send")
         self.send.bind(on_press=self.send_message)
 
