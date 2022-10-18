@@ -1,6 +1,5 @@
 charset-normalizer==2.1.1
 colorama==0.4.5
-deepspeech-tflite==0.9.3
 docutils==0.19
 halo==0.0.31
 idna==3.3
@@ -16,6 +15,5 @@ scipy==1.7.3
 six==1.16.0
 spinners==0.0.24
 termcolor==1.1.0
-tqdm @ file:///opt/conda/conda-bld/tqdm_1650891076910/work
 urllib3==1.26.12
 webrtcvad==2.0.10
